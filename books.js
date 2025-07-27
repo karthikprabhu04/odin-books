@@ -26,7 +26,33 @@ function renderLibrary() {
   myLibrary.forEach(book => {
     const item = document.createElement("li");
     item.textContent = `${book.title} ${book.author} ${book.pages} ${book.read} (${book.id})`;
+    item.dataset.id = book.id;
     list.appendChild(item);
+
+    // Remove button
+    const remove = document.createElement("button");
+    remove.textContent = "Remove";
+    remove.addEventListener("click", (e) => {
+      item.remove();
+      e.target.remove();
+      const index = myLibrary.findIndex(book => item.dataset.id === book.id);
+      if (index !== -1) {
+        myLibrary.splice(index, 1);
+      }
+    })
+    list.appendChild(remove);
+
+    // Toggle read button
+    const read = document.createElement("button");
+    read.textContent = "Toggle Read Status";
+    read.addEventListener("click", () => {
+      const index = myLibrary.findIndex(book => item.dataset.id === book.id);
+      if (index !== -1) {
+        myLibrary[index].read = myLibrary[index].read === "READ" ? "NOT READ" : "READ";
+        renderLibrary();
+      }
+    })
+    list.appendChild(read)
   });
 }
 
@@ -57,7 +83,6 @@ bookForm.addEventListener("submit", (e) => {
 
   new Book(title, author, pages, read)
   renderLibrary();
-  // console.log(Object.fromEntries(formdata.entries()));
 
   bookForm.reset();
   dialog.close()
