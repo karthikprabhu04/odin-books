@@ -1,0 +1,25 @@
+body {
+    padding: 3%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+th, td {
+    border: 1px solid black;
+    font-size: 18px
+}
+
+#add-book {
+    font-size: 24px;
+    font-weight: 700;
+    background-color: rgb(80, 115, 255);
+    color:white;
+    border-radius: 20px;
+    border: 2px solid black;
+    padding: 10px 20px;
+    margin-top: 16px;
+}

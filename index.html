@@ -3,15 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="books.js" defer></script>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./books.js" defer></script>
     <title>Books</title>
 </head>
 <body>
     <h1>Books</h1>
-    <div>
-        <ul class="list">
+    <table>
+        <thead>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Pages</th>
+            <th>Read Status</th>
+            <th>ID</th>
+            <th>Actions</th>
+        </thead>
+        <tbody class="list">
+            <!-- Adding book rows here -->
+        </tbody>
+    </table>
+
+
+    <!-- <div>
+        <ul class="list" >
         </ul>
-    </div>
+    </div> -->
 
     <button id="add-book">Add book</button>
 

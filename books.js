@@ -15,19 +15,30 @@ function addBookToLibrary(book) {
 }
 
 // Display items on html page
-new Book("title-1", "author-1", "10", "READ");
-new Book("title-2", "author-2", "20", "NOT READ");
-new Book("title-3", "author-3", "30", "NOT READ");
+new Book("The Alchemist", "Paulo Coelho", "208", "READ");
+new Book("The Lean Startup", "Eric Ries", "336", "READ");
+new Book("Zero to One", "Peter Thiel", "224", "NOT READ");
 
 const list = document.querySelector(".list");
 
 function renderLibrary() {
   list.innerHTML = "";
   myLibrary.forEach(book => {
-    const item = document.createElement("li");
-    item.textContent = `${book.title} ${book.author} ${book.pages} ${book.read} (${book.id})`;
+    const item = document.createElement("tr");
+    // item.textContent = `${book.title} ${book.author} ${book.pages} ${book.read} (${book.id})`;
+     item.innerHTML = `
+      <td>${book.title}</td>
+      <td>${book.author}</td>
+      <td>${book.pages}</td>
+      <td>${book.read}</td>
+      <td>${book.id}</td>
+      <td class="actions"></td>
+    `;
+
     item.dataset.id = book.id;
     list.appendChild(item);
+
+    const actionsCell = item.querySelector("td.actions")
 
     // Remove button
     const remove = document.createElement("button");
@@ -40,7 +51,7 @@ function renderLibrary() {
         myLibrary.splice(index, 1);
       }
     })
-    list.appendChild(remove);
+    actionsCell.appendChild(remove);
 
     // Toggle read button
     const read = document.createElement("button");
@@ -52,7 +63,7 @@ function renderLibrary() {
         renderLibrary();
       }
     })
-    list.appendChild(read)
+    actionsCell.appendChild(read)
   });
 }
 
