@@ -94,6 +94,7 @@ class BookFormUI {
     
     addBook.addEventListener("click", () => {
       dialog.showModal();
+      validation();
     });
     
     cancel.addEventListener("click", () => {
@@ -102,7 +103,10 @@ class BookFormUI {
     
     bookForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      this.handleSubmit();
+      updateValidationMessages();
+      if (bookForm.reportValidity()) {
+        this.handleSubmit();
+      }
     })
   }
   
@@ -125,6 +129,70 @@ class BookFormUI {
   }
 }
 
+function validation() {
+  const title = document.getElementById("title");
+  const author = document.getElementById("author");
+  const pages = document.getElementById("pages");
+  
+  // Validate title to check not missing
+  title.setCustomValidity("Type actual title")
+  title.addEventListener("input", () => {
+    if (title.validity.valueMissing) {
+      title.setCustomValidity("Type actual title")
+    } else {
+      title.setCustomValidity("")
+    }
+  });
+
+  // Validate author to check not missing
+  author.setCustomValidity("Type actual author")
+  author.addEventListener("input", () => {
+    if (author.validity.valueMissing) {
+      author.setCustomValidity("Type actual author")
+    } else {
+      author.setCustomValidity("")
+    }
+  });
+
+  // Validate pages to check above 0
+  pages.setCustomValidity("Please enter a page number");
+  pages.addEventListener("input", () => {
+    if (pages.validity.valueMissing) {
+      pages.setCustomValidity("Please enter a page number");
+    } else if (pages.validity.rangeUnderflow) {
+      pages.setCustomValidity("Page number should be non-zero");
+    } else {
+      pages.setCustomValidity("");
+    }
+  });
+}
+
+function updateValidationMessages() {
+  const title = document.getElementById("title");
+  const author = document.getElementById("author");
+  const pages = document.getElementById("pages");
+
+  if (title.validity.valueMissing) {
+    title.setCustomValidity("Type actual title");
+  } else {
+    title.setCustomValidity("");
+  }
+
+  if (author.validity.valueMissing) {
+    author.setCustomValidity("Type actual author");
+  } else {
+    author.setCustomValidity("");
+  }
+
+  if (pages.validity.valueMissing) {
+    pages.setCustomValidity("Please enter a page number");
+  } else if (pages.validity.rangeUnderflow) {
+    pages.setCustomValidity("Page number should be non-zero");
+  } else {
+    pages.setCustomValidity("");
+  }
+  console.log("updated")
+}
 
 // Add books to library
 const myLibrary = new Library();
@@ -135,4 +203,5 @@ myLibrary.addBook(new Book("The Alchemist", "Paulo Coelho", "208", "READ"));
 myLibrary.addBook(new Book("The Lean Startup", "Eric Ries", "336", "READ"));
 myLibrary.addBook(new Book("Zero to One", "Peter Thiel", "224", "NOT READ"));
 
+validation();
 ui.render();
